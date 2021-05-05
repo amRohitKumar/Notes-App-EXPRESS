@@ -16,6 +16,7 @@ router.post('/login', passport.authenticate('local', {failureFlash: true, failur
 
 router.get('/register', (req, res) => {
     // FOR RENDERING THE REGISTER FORM
+    // console.log(res.locals);
     res.render('users/register');
 })
 
