@@ -4,10 +4,11 @@ const Note = require('../models/note');
 const User = require('../models/user');
 
 
-router.get('/notes/:userId', (req, res) => {
+router.get('/notes/:userId', async (req, res) => {
     const {userId} = req.params;
+    const user = await User.findById(userId).populate('notes');
 
-    res.render('homePage', {userId});
+    res.render('homePage', {userId, user});
 })
 
 router.post('/notes/:userId', async (req, res) => {
