@@ -1,14 +1,23 @@
 <% layout('layouts/boilerplate') %> 
 
 <div class="container">
-    <div class="row mt-2">
+    <% if(success.length != 0){ %> 
+        <div class="mb-1" style="text-align: center;">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= success %> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    <% } %> 
+    <!-- DIV FOR NEW NOTE FORM -->
+    <div class="row mt-1">
         <div class="col-6 offset-3">
-            <form action="/notes/:id" method="POST" novalidate class="validated-form">
-                <div class="mb-3">
+            <form action="/notes/<%=userId%>" method="POST" novalidate class="validated-form">
+                <div class="mb-1">
                     <label class="form-label" for="title">Title: </label>
                     <input id="title" class="form-control" type="text" placeholder="Title..." name="title" >
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label class="form-label" for="note">Email: </label>
                     <input id="note" class="form-control" type="text" placeholder="Note..." name="note" required>
                     <div class="valid-feedback">
@@ -20,5 +29,8 @@
                 </div>
             </form>
         </div>
+    </div>
+    <div class="row mt-2">
+        
     </div>
 </div>

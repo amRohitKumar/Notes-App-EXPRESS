@@ -9,9 +9,14 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/register'}), (req, res) => {
-    console.log('working login')
-    req.flash('success', "welcome");
-    res.send('working login')
+    // console.log('working login')
+    let userId = req.user._id;
+    let userName = req.user.name;
+    // res.send(userName);
+    req.flash('success', `Welcome back ${userName} !`);
+    // console.log(req.user);
+    // res.send("workign check console");
+    res.redirect(`/notes/${userId}`);
 })
 
 router.get('/register', (req, res) => {
@@ -27,6 +32,7 @@ router.post('/register', async (req, res) => {
     const newUser = await User.register(user, password);
     // res.render('homePage')
     console.log(newUser);
+    res.send('/login');
 })
 
 
