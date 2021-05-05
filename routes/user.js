@@ -31,8 +31,18 @@ router.post('/register', async (req, res) => {
     const user = new User({email: email, username:username, name: name});
     const newUser = await User.register(user, password);
     // res.render('homePage')
-    console.log(newUser);
-    res.send('/login');
+    // console.log(newUser);
+    // res.send('/login');
+    const userId = user._id;
+    req.flash('success', 'Account Created ! Login');
+    res.redirect('/login');
+})
+
+router.get('/logout', (req, res) => {
+    // console.dir(req.user);
+    req.logout();
+    req.flash('success', 'Logout successfully !');
+    res.redirect('/login');
 })
 
 

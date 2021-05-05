@@ -1,0 +1,19 @@
+.notediv{
+    border: 1px solid rgb(14, 145, 69);
+}
+
+.titlediv{
+    border-bottom: 1px solid grey;
+    border-width: 90%;
+}
+
+.customalert{
+    margin-top: 0.2em;
+    padding-top: 0.6em;
+    padding-bottom: 0.6em;
+}
+
+.btn{
+    position: inherit;
+    margin-bottom: auto;
+}
