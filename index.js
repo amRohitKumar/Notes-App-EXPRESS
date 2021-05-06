@@ -9,6 +9,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/user');
 const flash = require('connect-flash');
+const ExpressError = require('./utilities/expressError');
+
 
 mongoose.connect('mongodb://localhost:27017/notes-app', { 
     useNewUrlParser: true, 
@@ -66,6 +68,16 @@ app.use((req, res, next) => {
 
 app.use('/', userRoutes);
 app.use('/', noteRoutes);
+
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Page not found', 404));
+})
+
+app.use((err, req, res, next) => {
+    const {statusCode = 500 , message = 'Something went wrong !'} = err;
+    res.status(statusCode).send(message);
+
+})
 
 app.listen(8080, () => {
     console.log("LISTENING ON PORT 8080");
