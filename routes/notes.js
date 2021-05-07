@@ -23,7 +23,9 @@ router.post('/notes/:userId', isLoggedIn, validateNote ,asyncError(async (req, r
     const { userId } = req.params;
     const { title, note } = req.body;
 
-    const newNote = new Note({ title: title, body: note, lastActivityDate: date, lastActivityTime: time })
+    const currDate = date();
+    const currTime = time();
+    const newNote = new Note({ title: title, body: note, lastActivityDate: currDate, lastActivityTime: currTime })
     await newNote.save();
     const newNoteId = newNote._id;
     // res.send(newNoteId);
@@ -32,6 +34,26 @@ router.post('/notes/:userId', isLoggedIn, validateNote ,asyncError(async (req, r
     user.notes.push(newNote);
     await user.save();
     req.flash('success', 'New note added successfully !');
+    res.redirect(`/notes/${userId}`);
+}))
+
+router.put('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => {
+    const {userId, noteId} = req.params;
+    const {newtitle, newnote} = req.body;
+    const reqNote = await Note.findById(noteId);
+    reqNote.title = newtitle;
+    reqNote.body = newnote;
+    const currDate = date();
+    const currTime = time();
+    reqNote.lastActivityDate = currDate;
+    reqNote.lastActivityTime = currTime;
+    await reqNote.save();
+    res.redirect(`/notes/${userId}`);
+}))
+
+router.delete('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => {
+    const {userId, noteId} = req.params;
+    const reqNote = await Note.findByIdAndDelete(noteId);
     res.redirect(`/notes/${userId}`);
 }))
 
