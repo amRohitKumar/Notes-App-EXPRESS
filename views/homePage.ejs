@@ -29,7 +29,7 @@
                     <div class=" bodydiv">
                         <%= note.body %>
                     </div>
-                    <div class="middiv mt-3 mb-2 btndiv" >
+                    <div class="middiv mt-3 mb-2 btndiv">
                         <button type="button" class="btn btn-warning btn-sm me-md-2" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop">Edit</button>
                         <form action="/notes/<%= user._id %>/<%= note._id %>?_method=DELETE" method="POST">

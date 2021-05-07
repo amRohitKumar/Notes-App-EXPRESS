@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV != "production"){
+    require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -10,10 +14,16 @@ const localStrategy = require('passport-local');
 const User = require('./models/user');
 const flash = require('connect-flash');
 const ExpressError = require('./utilities/expressError');
- 
+const mongoSanitize = require('express-mongo-sanitize');
 
+const MongoStore = require('connect-mongo');
 
-mongoose.connect('mongodb://localhost:27017/notes-app', { 
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/notes-app';
+const SECRET = process.env.SECRET || 'thisisasecret';
+
+// const dbUrl = 'mongodb://localhost:27017/notes-app';
+
+mongoose.connect(dbUrl, { 
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true,
@@ -33,9 +43,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret: SECRET,
+    touchAfter: 24*60 *60
+})
+
+store.on('error', function(e){
+    console.log("SESSION STORE ERROR", e);
+})
 
 const sessionConfig = {
-    secret:'thisisasecret',
+    store,
+    secret: SECRET,
     resave: false,
     saveUninitialized: true,
     cookie : {
@@ -54,12 +74,14 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(mongoSanitize());
 
 const userRoutes = require('./routes/user')
 const noteRoutes = require('./routes/notes');
 
 
 app.use((req, res, next) => {
+    // console.log(req.query);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
@@ -69,6 +91,10 @@ app.use((req, res, next) => {
 
 app.use('/', userRoutes);
 app.use('/', noteRoutes);
+
+app.get('/', (req, res) => {
+    res.render('home');
+})
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found', 404));
