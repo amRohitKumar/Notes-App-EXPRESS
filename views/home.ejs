@@ -19,6 +19,7 @@
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Register</a>
                     <% } else { %>
+                    <a class="nav-link" href= "/notes/<%= currentUser._id %>">Home</a>
                     <a class="nav-link" href="/logout">Logout</a>
                     <% } %>
                 </nav>
