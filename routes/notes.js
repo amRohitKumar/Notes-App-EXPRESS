@@ -48,12 +48,14 @@ router.put('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => 
     reqNote.lastActivityDate = currDate;
     reqNote.lastActivityTime = currTime;
     await reqNote.save();
+    req.flash('success', 'Note edited successfully !');
     res.redirect(`/notes/${userId}`);
 }))
 
 router.delete('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => {
     const {userId, noteId} = req.params;
     const reqNote = await Note.findByIdAndDelete(noteId);
+    res.flash('error', "Note deleted successfully !");
     res.redirect(`/notes/${userId}`);
 }))
 

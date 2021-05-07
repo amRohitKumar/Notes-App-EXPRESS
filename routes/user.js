@@ -36,7 +36,7 @@ router.post('/register', validateUser ,asyncError(async (req, res) => {
             if (err) {
                 return next(err);
             }
-            req.flash('success', 'Welcome to Yelp-Camp');
+            req.flash('success', 'Welcome to Notes-App');
             res.redirect(`/notes/${userId}`);
         })
 
