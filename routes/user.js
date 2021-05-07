@@ -50,7 +50,7 @@ router.get('/logout', (req, res) => {
     // console.dir(req.user);
     req.logout();
     req.flash('success', 'Logout successfully !');
-    res.redirect('/login');
+    res.redirect('/');
 })
 
 

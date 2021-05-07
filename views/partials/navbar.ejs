@@ -6,7 +6,10 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <% if(currentUser){ %> 
+        <% if(currentUser){ %>
+          <div class="navbar-links active">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </div>
           <div class="navbar-nav ml-auto" style="margin-left: auto;">
             <a href="/logout" class="nav-link ">Logout</a>
           </div>
