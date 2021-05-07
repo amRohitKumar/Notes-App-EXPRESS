@@ -10,6 +10,7 @@ const localStrategy = require('passport-local');
 const User = require('./models/user');
 const flash = require('connect-flash');
 const ExpressError = require('./utilities/expressError');
+ 
 
 
 mongoose.connect('mongodb://localhost:27017/notes-app', { 
@@ -74,8 +75,9 @@ app.all('*', (req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500 , message = 'Something went wrong !'} = err;
-    res.status(statusCode).send(message);
+    const {statusCode = 500} = err;
+    if(!err.message) err.message = "Oh NO , Something went wrong !";
+    res.status(statusCode).render('error', {err});
 
 })
 
