@@ -1,3 +1,6 @@
+const e = require('connect-flash');
+const { notesSchema, usersSchema } = require('../joi/schema');
+const ExpressError = require('../utilities/expressError');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if(!req.user){
@@ -5,4 +8,25 @@ module.exports.isLoggedIn = (req, res, next) => {
         return res.redirect('/login');
     }
     next();
+}
+
+module.exports.validateNote = (req, res, next) => {
+    const {error} = notesSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400);
+    }
+    else next();
+}
+
+module.exports.validateUser = (req, res, next) => {
+    const {email, name} = req.body;
+    const {error} = usersSchema.validate({email: email, name: name});
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400);
+    }
+    else{
+        next();
+    }
 }

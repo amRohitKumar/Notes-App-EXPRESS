@@ -5,14 +5,15 @@ module.exports.notesSchema = Joi.object({
         .min(1)
         .max(25)
         .required(),
-    body: Joi.string(),
+    note: Joi.string(),
 })
 
 module.exports.usersSchema = Joi.object({
     name: Joi.string()
         .min(2)
         .required(),
-    emailId: Joi.string()
+    email: Joi.string()
         .email()
         .required(),
 })
+// we don't need the user part 'couz that will be take care by passport

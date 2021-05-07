@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/user');
 const passport = require('passport');
 const asyncError = require('../utilities/asyncError');
+const {validateUser} = require('../middleware/middleware');
+
 
 router.get('/login', (req, res) => {
     // FOR RENDERING THE LOGIN FORM
@@ -23,7 +25,7 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 })
 
-router.post('/register', async (req, res) => {
+router.post('/register', validateUser ,asyncError(async (req, res) => {
     try {
         const { name, username, email, password } = req.body;
         // LOGIC TO REGISTER A NEW USER
@@ -42,7 +44,7 @@ router.post('/register', async (req, res) => {
         req.flash('error', e.message);
         res.redirect('/register');
     }
-})
+}))
 
 router.get('/logout', (req, res) => {
     // console.dir(req.user);

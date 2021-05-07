@@ -1,14 +1,6 @@
 <% layout('layouts/boilerplate') %> 
 <link rel="stylesheet" href="/stylesheet/homePage.css">
 <div class="container">
-    <% if(success.length != 0){ %> 
-        <div class="mb-1 row flashdiv" style="text-align: center;">
-            <div class="alert alert-success alert-dismissible fade show customalert col-8 offset-2" role="alert">
-                <%= success %> 
-                <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-    <% } %> 
     <!-- DIV FOR NEW NOTE FORM -->
     <div class="row mt-1">
         <div class="col-6 offset-3">
