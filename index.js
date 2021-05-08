@@ -18,10 +18,10 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 const MongoStore = require('connect-mongo');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/notes-app';
-const dbUrl = 'mongodb://localhost:27017/notes-app';
-// const SECRET = process.env.SECRET || 'thisisasecret';
-const SECRET = 'thisisasecret';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/notes-app';
+// const dbUrl = 'mongodb://localhost:27017/notes-app';
+const SECRET = process.env.SECRET || 'thisisasecret';
+// const SECRET = 'thisisasecret';
 
 // const dbUrl = 'mongodb://localhost:27017/notes-app';
 
