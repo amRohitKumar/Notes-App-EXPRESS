@@ -28,10 +28,10 @@ router.get('/notes/:userId/search', asyncError(async(req, res) => {
             return currnote
         }
     })
+    // console.log(results.length);
     if (results.length === 0) {
-        req.flash('error', `Your search - ${searchinput} - did not match any notes`)
     }
-    res.render(`homePage`, {userId, notearr: results, user});
+    res.render(`homePage`, {userId, notearr: results, user, searchinput});
     
 }))
 
