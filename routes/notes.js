@@ -23,12 +23,14 @@ router.get('/notes/:userId/search', asyncError(async(req, res) => {
     const {searchinput} = req.query;
     const user =  await User.findById(userId).populate('notes');
 
-    const results = user.notes.map(currnote => {
+    const results = user.notes.filter(currnote => {
         if (currnote.title.includes(searchinput) || currnote.body.includes(searchinput)) {
             return currnote
         }
     })
-
+    if (results.length === 0) {
+        req.flash('error', `Your search - ${searchinput} - did not match any notes`)
+    }
     res.render(`homePage`, {userId, notearr: results, user});
     
 }))
