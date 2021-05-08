@@ -21,7 +21,8 @@
     <div class="container notecontainer">
         <!-- DIV FOR PREVIOUS NOTE FORM -->
         <div class="row row-cols-4">
-            <% for(let note of user.notes){ %>
+            <% for(let note of notearr){ %>
+                <% if(note){ %> 
                 <div class="col notediv">
                     <div class=" titlediv"> <strong>
                             <%= note.title %>
@@ -68,6 +69,7 @@
                         </div>
                     </div>
                 </div>
+                <% } %> 
             <% } %>
         </div>
     </div>
