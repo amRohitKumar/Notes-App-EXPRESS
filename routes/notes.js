@@ -38,7 +38,6 @@ router.post('/notes/:userId', isLoggedIn, validateNote ,asyncError(async (req, r
 
     const { userId } = req.params;
     const { title, note } = req.body;
-
     const currDate = date();
     const currTime = time();
     const newNote = new Note({ title: title, body: note, lastActivityDate: currDate, lastActivityTime: currTime })

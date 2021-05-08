@@ -1,10 +1,4 @@
 
-// const btnDiv = document.querySelectorAll('.btndiv');
-
-// btnDiv.addEventListener('moseenter', () => {
-    
-// })
-
 
 var exampleModal = document.getElementById('staticBackdrop');
 
@@ -32,3 +26,4 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
     modalBodyInput.value = title;
     modalnote.value = note;
 })
+
