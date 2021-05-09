@@ -14,7 +14,10 @@ router.get('/notes/:userId', isLoggedIn, asyncError(async (req, res) => {
 
     const { userId } = req.params;
     const user = await User.findById(userId).populate('notes');
-    res.render('homePage', { userId, notearr: user.notes, user });
+    // console.log(user);
+    // req.currentUser = user;
+    let firsttime = true;
+    res.render('homePage', { userId, notearr: user.notes, user, firsttime, currentUser: user });
 }))
 
 router.get('/notes/:userId/search', asyncError(async(req, res) => {
@@ -25,13 +28,11 @@ router.get('/notes/:userId/search', asyncError(async(req, res) => {
 
     const results = user.notes.filter(currnote => {
         if (currnote.title.includes(searchinput) || currnote.body.includes(searchinput)) {
-            return currnote
+            return true;
         }
     })
-    // console.log(results.length);
-    if (results.length === 0) {
-    }
-    res.render(`homePage`, {userId, notearr: results, user, searchinput});
+    const firsttime = false;
+    res.render(`homePage`, {userId, notearr: results, user, searchinput, firsttime, currentUser: user});
     
 }))
 
@@ -55,6 +56,7 @@ router.post('/notes/:userId', isLoggedIn, validateNote ,asyncError(async (req, r
 }))
 
 router.put('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => {
+
     const {userId, noteId} = req.params;
     const {newtitle, newnote} = req.body;
     const reqNote = await Note.findById(noteId);
@@ -70,6 +72,7 @@ router.put('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => 
 }))
 
 router.delete('/notes/:userId/:noteId', isLoggedIn, asyncError(async (req, res) => {
+
     const {userId, noteId} = req.params;
     const reqNote = await Note.findByIdAndDelete(noteId);
     req.flash('error', "Note deleted successfully !");

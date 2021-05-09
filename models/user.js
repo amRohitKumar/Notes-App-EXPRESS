@@ -9,11 +9,14 @@ const userSchema = new Schema({
     notes : [{
         type: Schema.Types.ObjectId,
         ref: 'Note'
-    }]
+    }],
+    googleId: String
 });
 
 // this line will automatically add username and password field in our model
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, {
+    usernameUnique: false,
+});
 
 const User = mongooose.model('User', userSchema);
 
